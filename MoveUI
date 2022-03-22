@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MoveUI : MonoBehaviour
+{
+    float speed = 10.0f;
+
+    Rigidbody2D rb;
+
+    bool FacingRight = true;
+
+    int directionInput;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        rb.velocity = new Vector2(speed * directionInput, rb.velocity.y);
+
+        if (directionInput< 0 && FacingRight)
+        {
+            Flip();
+        }
+        else if (directionInput > 0 && !FacingRight)
+        {
+            Flip();
+        }
+    }
+    public void Move(int ImputAxis)
+    {
+        directionInput = ImputAxis;
+    }
+    void Flip()
+    {
+        FacingRight = !FacingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
+}
